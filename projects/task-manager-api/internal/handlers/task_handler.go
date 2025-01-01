@@ -15,7 +15,7 @@ var tasks = []models.Task {
 }
 
 
-func GetTasks(w http.RequestWriter, r *http.Request) {
+func GetTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(tasks)
 }
@@ -61,24 +61,25 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 
 
 
+func DeleteTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
+	var TaskToDelete models.Task
+	err := json.NewDecoder(r.Body).Decode(&TaskToDelete)
+	if (err != nil) {
+		http.Error(w, "Invalid Input", http.StatusBadRequest)
+		return
+	}
 
+	for i, task := range tasks {
+		if task.ID == TaskToDelete.ID {
+			tasks = append(tasks[:i],tasks[i + 1:]...)
+			fmt.Fprintln(w, "Task deleted")
+			return
+		}
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	http.Error(w, "Task not Found", http.StatusNotFound)
+}
 
 
