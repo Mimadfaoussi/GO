@@ -38,6 +38,39 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newTask)
 }
 
+func UpdateTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var updatedTask models.Task
+	err := json.NewDecoder(r.Body).Decode(&updatedTask)
+	if (err != nil) {
+		http.Error(w, "invalid input", http.StatusBadRequest)
+		return
+	}
+
+	for i, task := range tasks {
+		if task.ID == updatedTask.ID {
+			tasks[i] = updatedTask
+			json.NewEncoder(w).Encode(updatedTask)
+			return
+		}
+	}
+
+	http.Error(w, "Task not found", http.StatusNotFound)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
