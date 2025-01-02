@@ -48,22 +48,13 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	var newTask models.Task
-	err := json.NewDecoder(r.body).Decode(&newTask)
+	err := json.NewDecoder(r.Body).Decode(&newTask)
 	if (err != nil) {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-
-	var newTask models.Task
-
-	err := json.NewDecoder(r.Body).Decode(&newTask)
-	if (err != nil) {
-		http.Error(w, "invalid input", http.StatusBadRequest)
-		return
-	}
-
-	_, err = db.Exec("INSERT INTO tasks(title, description, status) VALUES ($1, $2, $3)", newTask.Title, newTask.description, newTask.status)
+	_, err = db.Exec("INSERT INTO tasks(title, description, status) VALUES ($1, $2, $3)", newTask.Title, newTask.Description, newTask.Status)
 	if (err != nil) {
 		http.Error(w, "Failed to create task", http.StatusInternalServerError)
 		return
@@ -73,48 +64,48 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Task created successfully")
 }
 
-func UpdateTask(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// func UpdateTask(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
 
-	var updatedTask models.Task
-	err := json.NewDecoder(r.Body).Decode(&updatedTask)
-	if (err != nil) {
-		http.Error(w, "invalid input", http.StatusBadRequest)
-		return
-	}
+// 	var updatedTask models.Task
+// 	err := json.NewDecoder(r.Body).Decode(&updatedTask)
+// 	if (err != nil) {
+// 		http.Error(w, "invalid input", http.StatusBadRequest)
+// 		return
+// 	}
 
-	for i, task := range tasks {
-		if task.ID == updatedTask.ID {
-			tasks[i] = updatedTask
-			json.NewEncoder(w).Encode(updatedTask)
-			return
-		}
-	}
+// 	for i, task := range tasks {
+// 		if task.ID == updatedTask.ID {
+// 			tasks[i] = updatedTask
+// 			json.NewEncoder(w).Encode(updatedTask)
+// 			return
+// 		}
+// 	}
 
-	http.Error(w, "Task not found", http.StatusNotFound)
-}
+// 	http.Error(w, "Task not found", http.StatusNotFound)
+// }
 
 
 
-func DeleteTask(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// func DeleteTask(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
 
-	var TaskToDelete models.Task
-	err := json.NewDecoder(r.Body).Decode(&TaskToDelete)
-	if (err != nil) {
-		http.Error(w, "Invalid Input", http.StatusBadRequest)
-		return
-	}
+// 	var TaskToDelete models.Task
+// 	err := json.NewDecoder(r.Body).Decode(&TaskToDelete)
+// 	if (err != nil) {
+// 		http.Error(w, "Invalid Input", http.StatusBadRequest)
+// 		return
+// 	}
 
-	for i, task := range tasks {
-		if task.ID == TaskToDelete.ID {
-			tasks = append(tasks[:i],tasks[i + 1:]...)
-			fmt.Fprintln(w, "Task deleted")
-			return
-		}
-	}
+// 	for i, task := range tasks {
+// 		if task.ID == TaskToDelete.ID {
+// 			tasks = append(tasks[:i],tasks[i + 1:]...)
+// 			fmt.Fprintln(w, "Task deleted")
+// 			return
+// 		}
+// 	}
 
-	http.Error(w, "Task not Found", http.StatusNotFound)
-}
+// 	http.Error(w, "Task not Found", http.StatusNotFound)
+// }
 
 
