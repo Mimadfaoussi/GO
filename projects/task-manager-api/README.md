@@ -19,3 +19,16 @@ Update : curl -X PUT -H "Content-Type: application/json" -d '{"id": 1, "title": 
 
 Delete : curl -X DELETE -H "Content-Type: application/json" -d '{"id": 1}' http://localhost:8080/tasks/delete
 
+
+
+
+setting up PostgreSQL using Docker (just for learning purposes that's why env variables are not secure in this case ): 
+
+sudo docker run --name postgres-taskdb -e POSTGRES_DB=taskdb -e POSTGRES_USER=taskuser -e POSTGRES_PASSWORD=taskpassword -p 5432:5432 -d postgres
+
+
+Verifying the connection to the database:
+
+docker exec -it postgres-taskdb psql -U taskuser -d taskdb
+
+
