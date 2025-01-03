@@ -53,6 +53,12 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
+
+	if (newTask.Title == "" || newTask.Status == ""){
+		http.Error(w, "Title and Status are required fileds.", http.StatusBadRequest)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	_, err = db.Exec("INSERT INTO tasks(title, description, status) VALUES ($1, $2, $3)", newTask.Title, newTask.Description, newTask.Status)
 	if (err != nil) {
@@ -71,6 +77,11 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&updatedTask)
 	if (err != nil) {
 		http.Error(w, "Wrong Input", http.StatusBadRequest)
+		return
+	}
+
+	if (updatedTask.Title == "" || updatedTask.Status == ""){
+		http.Error(w, "Title and Status are required fileds.", http.StatusBadRequest)
 		return
 	}
 
