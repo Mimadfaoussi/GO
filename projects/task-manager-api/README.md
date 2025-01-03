@@ -29,8 +29,8 @@ This project is designed to practice building a **REST API** using **Go** with m
 
 ```bash
 
-git clone https://github.com/yourusername/task-manager-api.git
-cd task-manager-api
+git clone git@github.com:Mimadfaoussi/GO.git
+cd projects/task-manager-api
 ```
 
 ### 🐳 **2. Set Up PostgreSQL Using Docker**

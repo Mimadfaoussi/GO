@@ -64,48 +64,63 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Task created successfully")
 }
 
-// func UpdateTask(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
+func UpdateTask(w http.ResponseWriter, r *http.Request) {
+	http.Header().Set("Content-Type", "application/json")
 
-// 	var updatedTask models.Task
-// 	err := json.NewDecoder(r.Body).Decode(&updatedTask)
-// 	if (err != nil) {
-// 		http.Error(w, "invalid input", http.StatusBadRequest)
-// 		return
-// 	}
+	var newTask models.Task
+	err := json.NewDecoder(r.Body).Decode(&newTask)
+	if (err != nil) {
+		http.Error(w, "Wrong Input", http.StatusBadRequest)
+		return
+	}
 
-// 	for i, task := range tasks {
-// 		if task.ID == updatedTask.ID {
-// 			tasks[i] = updatedTask
-// 			json.NewEncoder(w).Encode(updatedTask)
-// 			return
-// 		}
-// 	}
+	result, err = db.Exec(
+		"UPDATE tasks SET title=$1, description=$2, status=$3 WHERE id=$4",
+		UpdateTask.Title, UpdateTask.Description, UpdateTask.Status, UpdateTask.ID,
+	)
 
-// 	http.Error(w, "Task not found", http.StatusNotFound)
-// }
+	if (err != nil) {
+		http.Error(w, "Failed to update task", http.StatusInternalServerError)
+		return
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	if (rowsAffected == 0) {
+		http.Error(w, "Task not found", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintln(w, "Task updated successfully")
+}
 
 
 
-// func DeleteTask(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
+func DeleteTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-// 	var TaskToDelete models.Task
-// 	err := json.NewDecoder(r.Body).Decode(&TaskToDelete)
-// 	if (err != nil) {
-// 		http.Error(w, "Invalid Input", http.StatusBadRequest)
-// 		return
-// 	}
+	var TaskToDelete models.Task
+	err := json.NewDecoder(r.Body).Decode(&TaskToDelete)
+	if (err != nil) {
+		http.Error(w, "Invalid Input", http.StatusBadRequest)
+		return
+	}
 
-// 	for i, task := range tasks {
-// 		if task.ID == TaskToDelete.ID {
-// 			tasks = append(tasks[:i],tasks[i + 1:]...)
-// 			fmt.Fprintln(w, "Task deleted")
-// 			return
-// 		}
-// 	}
+	result, err := db.Exec("DELETE FROM tasks WHERE id=$1", TaskToDelete.ID)
 
-// 	http.Error(w, "Task not Found", http.StatusNotFound)
-// }
+	if (err != nil) {
+		http.Error(w, "Couldn't delete from tasks", http.StatusInternalServerError)
+		return
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	if (rowsAffected == 0) {
+		http.Error(w, "Task not found", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintln(w, "Task deleted successfully")
+}
 
 

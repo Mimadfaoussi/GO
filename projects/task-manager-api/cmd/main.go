@@ -24,8 +24,8 @@ func main() {
 
 	http.HandleFunc("/tasks", handlers.GetTasks)
 	http.HandleFunc("/tasks/create", handlers.CreateTask)
-	// http.HandleFunc("/tasks/update", handlers.UpdateTask)
-	// http.HandleFunc("/tasks/delete", handlers.DeleteTask)
+	http.HandleFunc("/tasks/update", handlers.UpdateTask)
+	http.HandleFunc("/tasks/delete", handlers.DeleteTask)
 
 
 	port := ":8080"
