@@ -65,18 +65,18 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateTask(w http.ResponseWriter, r *http.Request) {
-	http.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 
-	var newTask models.Task
-	err := json.NewDecoder(r.Body).Decode(&newTask)
+	var updatedTask models.Task
+	err := json.NewDecoder(r.Body).Decode(&updatedTask)
 	if (err != nil) {
 		http.Error(w, "Wrong Input", http.StatusBadRequest)
 		return
 	}
 
-	result, err = db.Exec(
+	result, err := db.Exec(
 		"UPDATE tasks SET title=$1, description=$2, status=$3 WHERE id=$4",
-		UpdateTask.Title, UpdateTask.Description, UpdateTask.Status, UpdateTask.ID,
+		updatedTask.Title, updatedTask.Description, updatedTask.Status, updatedTask.ID,
 	)
 
 	if (err != nil) {
