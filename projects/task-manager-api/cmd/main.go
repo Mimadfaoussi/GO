@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"task-manager-api/internal/handlers"
 	"task-manager-api/internal/db"
-
+	"task-manager-api/internal/middleware"
 )
 
 
@@ -21,12 +21,13 @@ func main() {
 	handlers.InitDB(database)
 	// http.HandleFunc("/", homeHandler)
 
+	mux := http.NewServeMux()
+	mux.http.HandleFunc("/tasks", handlers.GetTasks)
+	mux.http.HandleFunc("/tasks/create", handlers.CreateTask)
+	mux.http.HandleFunc("/tasks/update", handlers.UpdateTask)
+	mux.http.HandleFunc("/tasks/delete", handlers.DeleteTask)
 
-	http.HandleFunc("/tasks", handlers.GetTasks)
-	http.HandleFunc("/tasks/create", handlers.CreateTask)
-	http.HandleFunc("/tasks/update", handlers.UpdateTask)
-	http.HandleFunc("/tasks/delete", handlers.DeleteTask)
-
+	loggedMux := middleware.LoggingMiddleware(mux)
 
 	port := ":8080"
 	fmt.Printf("Server is running on http://localhost%s\n", port)
