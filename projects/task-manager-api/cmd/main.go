@@ -22,10 +22,10 @@ func main() {
 	// http.HandleFunc("/", homeHandler)
 
 	mux := http.NewServeMux()
-	mux.http.HandleFunc("/tasks", handlers.GetTasks)
-	mux.http.HandleFunc("/tasks/create", handlers.CreateTask)
-	mux.http.HandleFunc("/tasks/update", handlers.UpdateTask)
-	mux.http.HandleFunc("/tasks/delete", handlers.DeleteTask)
+	mux.HandleFunc("/tasks", handlers.GetTasks)
+	mux.HandleFunc("/tasks/create", handlers.CreateTask)
+	mux.HandleFunc("/tasks/update", handlers.UpdateTask)
+	mux.HandleFunc("/tasks/delete", handlers.DeleteTask)
 
 	loggedMux := middleware.LoggingMiddleware(mux)
 
