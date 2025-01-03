@@ -31,7 +31,7 @@ func main() {
 
 	port := ":8080"
 	fmt.Printf("Server is running on http://localhost%s\n", port)
-	err := http.ListenAndServe(port, nil)
+	err := http.ListenAndServe(port, loggedMux)
 	if err != nil {
 	 	fmt.Println("Error starting the server")
 	}
