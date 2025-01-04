@@ -62,7 +62,7 @@ To stop the services:
 docker compose stop
 ```
 
-## 🛠️ **Setup Instructions (To run it manually)**
+<!-- ## 🛠️ **Setup Instructions (To run it manually)**
 
 ### 📑 1. Clone the Repository
 
@@ -104,9 +104,9 @@ docker exec -it postgres-taskdb psql -U taskuser -d taskdb -f /schema.sql
 ### 🛠️ 1. Start the API Server
 ```bash
 go run cmd/main.go
-```
+``` -->
 
-### 🌐 2. Testing API Endpoints
+### 🌐 4. Testing API Endpoints
 
 we can test the endpoints locally using curl
 
