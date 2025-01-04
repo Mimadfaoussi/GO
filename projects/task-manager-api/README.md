@@ -22,9 +22,10 @@ This project is designed to practice building a **REST API** using **Go** with m
 
 ---
 
-## 🛠️ **Setup Instructions**
 
-### 📑 **1. Clone the Repository**
+## 🛠️ **Setup Instructions (with docker compose)**
+
+### 📑 1. Clone the Repository
 
 
 ```bash
@@ -33,7 +34,46 @@ git clone git@github.com:Mimadfaoussi/GO.git
 cd projects/task-manager-api
 ```
 
-### 🐳 **2. Set Up PostgreSQL Using Docker**
+### 🐳 2. Build and Start Services with Docker Compose
+
+```bash
+docker compose up --build -d
+```
+<ul>
+<li> --build: Ensures images are rebuilt. </li>
+<li> -d: Runs containers in detached mode. </li>
+</ul>
+
+
+### 🔌 3. Verify Services
+List running containers:
+```bash
+docker ps
+```
+
+Verify PostgreSQL connection:
+```bash
+docker exec -it postgres-taskdb psql -U taskuser -d taskdb
+```
+
+To stop the services:
+
+```bash
+docker compose stop
+```
+
+## 🛠️ **Setup Instructions (To run it manually)**
+
+### 📑 1. Clone the Repository
+
+
+```bash
+
+git clone git@github.com:Mimadfaoussi/GO.git
+cd projects/task-manager-api
+```
+
+### 🐳 2. Set Up PostgreSQL Using Docker
 
 ```bash
 sudo docker run --name postgres-taskdb \
@@ -43,7 +83,7 @@ sudo docker run --name postgres-taskdb \
   -p 5432:5432 -d postgres
 ```
 
-### 🔌 **3. Verify Database Connection **
+### 🔌 3. Verify Database Connection 
 
 we can verify that by connecting to the container using the following command:
 
@@ -51,7 +91,7 @@ we can verify that by connecting to the container using the following command:
 docker exec -it postgres-taskdb psql -U taskuser -d taskdb
 ```
 
-### 🗂️ **4. Run Database Schema **
+### 🗂️ 4. Run Database Schema 
 
 ```bash
 docker cp /models/schema.sql postgres-taskdb:/schema.sql
