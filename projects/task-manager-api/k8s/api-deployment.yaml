@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-api
+  labels:
+    app: go-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: go-api
+  template:
+    metadata:
+      labels:
+        app: go-api
+    spec:
+      containers:
+        - name: go-api
+          image: mfaoussi/go-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: taskuser
+            - name: DB_PASSWORD
+              value: taskpassword
+            - name: DB_NAME
+              value: taskdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-api-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: go-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
