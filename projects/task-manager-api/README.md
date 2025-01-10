@@ -1,18 +1,19 @@
-# 🚀 **Task Management REST API with Go**
+# **Task Management REST API with Go**
 
-## 📚 **Project Overview**
+## **Project Overview**
 
 This project is designed to practice building a **REST API** using **Go** with modern development tools and best practices.
 
-### ✅ **Key Features**
+###  **Key Features**
 1. **CRUD Operations:** Create, Read, Update, and Delete tasks.  
-2. **Database Integration:** Store task data using **PostgreSQL**.  
-3. **Containerization:** Use **Docker** and **Docker Compose** for simplified deployment.  
-4. **Scalability:** Deploy and scale the application with **Kubernetes**.  
+2. **Database Integration:** Store task data using **PostgreSQL**.
+3. **Frontend:** A simple frontend for interacting with the API.
+4. **Containerization:** Use **Docker** and **Docker Compose** for simplified deployment.  
+5. **Scalability:** Deploy and scale the application with **Kubernetes**.  
 
 ---
 
-## 📦 **Tech Stack**
+## **Tech Stack**
 
 - **Programming Language:** Go  
 - **Database:** PostgreSQL  
@@ -23,9 +24,9 @@ This project is designed to practice building a **REST API** using **Go** with m
 ---
 
 
-## 🛠️ **Setup Instructions (with docker compose)**
+## **Setup Instructions (with docker compose)**
 
-### 📑 1. Clone the Repository
+###  1. Clone the Repository
 
 
 ```bash
@@ -34,7 +35,7 @@ git clone git@github.com:Mimadfaoussi/GO.git
 cd projects/task-manager-api
 ```
 
-### 🐳 2. Build and Start Services with Docker Compose
+###  2. Build and Start Services with Docker Compose
 
 ```bash
 docker compose up --build -d
@@ -45,7 +46,7 @@ docker compose up --build -d
 </ul>
 
 
-### 🔌 3. Verify Services
+###  3. Verify Services
 List running containers:
 ```bash
 docker ps
@@ -62,9 +63,9 @@ To stop the services:
 docker compose stop
 ```
 
-## 🛠️ **Setup Instructions (To run it manually )**
+## **Setup Instructions (To run it manually )**
 
-### 📑 1. Clone the Repository
+### 1. Clone the Repository
 
 
 ```bash
@@ -73,7 +74,7 @@ git clone git@github.com:Mimadfaoussi/GO.git
 cd projects/task-manager-api
 ```
 
-### 🐳 2. Set Up PostgreSQL Using Docker
+###  2. Set Up PostgreSQL Using Docker
 
 ```bash
 sudo docker run --name postgres-taskdb \
@@ -83,7 +84,7 @@ sudo docker run --name postgres-taskdb \
   -p 5432:5432 -d postgres
 ```
 
-### 🔌 3. Verify Database Connection 
+### 3. Verify Database Connection 
 
 we can verify that by connecting to the container using the following command:
 
@@ -91,7 +92,7 @@ we can verify that by connecting to the container using the following command:
 docker exec -it postgres-taskdb psql -U taskuser -d taskdb
 ```
 
-### 🗂️ 4. Run Database Schema 
+### 4. Run Database Schema 
 
 ```bash
 docker cp /models/schema.sql postgres-taskdb:/schema.sql
@@ -99,26 +100,26 @@ docker exec -it postgres-taskdb psql -U taskuser -d taskdb -f /schema.sql
 ```
 
 
-## 🚀 Run the Application
+##  Run the Application
 
-### 🛠️ 1. Start the API Server
+###  1. Start the API Server
 ```bash
 go run cmd/main.go
 ```
 
-### 🌐 Testing API Endpoints
+###  Testing API Endpoints
 
 we can test the endpoints locally using curl
 
 
-#### 📌 Get All Tasks
+####  Get All Tasks
 
 ```bash
 curl http://localhost:8080/tasks
 ```
 
 
-#### 📌 Create a Task
+####  Create a Task
 
 ```bash
 curl -X POST -H "Content-Type: application/json" \
@@ -126,7 +127,7 @@ curl -X POST -H "Content-Type: application/json" \
 http://localhost:8080/tasks/create
 
 ```
-#### 📌 Update a Task
+#### Update a Task
 
 ```bash
 curl -X PUT -H "Content-Type: application/json" \
@@ -134,10 +135,20 @@ curl -X PUT -H "Content-Type: application/json" \
 http://localhost:8080/tasks/update
 ```
 
-#### 📌 Delete a Task
+####  Delete a Task
 
 ```bash
 curl -X DELETE -H "Content-Type: application/json" \
 -d '{"id": 1}' http://localhost:8080/tasks/delete
 
 ```
+
+#### Access the frontend
+
+The frontend is served as a separate microservice using Nginx and can be accessed at :
+
+
+```bash
+http://localhost:3000
+```
+
