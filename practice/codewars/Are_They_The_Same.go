@@ -17,6 +17,9 @@ func is_square(i int, array2 []int) bool{
 
 
 func Comp(array1 []int, array2 []int) bool {
+	if (arra1 == nil || arra2 == nil) {
+		return false
+	}
 	if (len(array1) == 0 || len(array2) == 0 || len(array1) != len(array2)){
 		return false
 	}
