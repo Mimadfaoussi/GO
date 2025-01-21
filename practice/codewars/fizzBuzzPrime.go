@@ -8,6 +8,9 @@ func is_prime(nb int) bool {
 	if (nb == 1) {
 		return false
 	}
+	if (nb == 2) {
+		return true
+	}
 	i := 2
 	for i = 2; i <= nb; i++ {
 		if (nb % i == 0) {
